@@ -23,6 +23,17 @@ test('space parameter (with tabs)', function (t) {
     );
 });
 
+test('space parameter (with tabs & pretty)', function (t) {
+    t.plan(1);
+    var obj = { one: 1, two: 2 };
+    t.equal(stringify(obj, {space: '\t', pretty: true}), ''
+        + '{\n'
+        + '\tone: 1,\n'
+        + '\ttwo: 2\n'
+        + '}'
+    );
+});
+
 test('space parameter (with a number)', function (t) {
     t.plan(1);
     var obj = { one: 1, two: 2 };
@@ -46,6 +57,57 @@ test('space parameter (nested objects)', function (t) {
         + '      3\n'
         + '    ],\n'
         + '    "b": 4\n'
+        + '  }\n'
+        + '}'
+    );
+});
+
+test('space parameter (nested objects, sortarrays)', function (t) {
+    t.plan(1);
+    var obj = { one: 1, two: { b: 4, a: [9,3] } };
+    t.equal(stringify(obj, {space: '  ', sortarrays:true}), ''
+        + '{\n'
+        + '  "one": 1,\n'
+        + '  "two": {\n'
+        + '    "a": [\n'
+        + '      3,\n'
+        + '      9\n'
+        + '    ],\n'
+        + '    "b": 4\n'
+        + '  }\n'
+        + '}'
+    );
+});
+
+test('space parameter (nested objects, pretty)', function (t) {
+    t.plan(1);
+    var obj = { one: 1, two: { b: 4, a: [2,3] } };
+    t.equal(stringify(obj, {space: '  ', pretty: true}), ''
+        + '{\n'
+        + '  one: 1,\n'
+        + '  two: {\n'
+        + '    a: [\n'
+        + '      2,\n'
+        + '      3\n'
+        + '    ],\n'
+        + '    b: 4\n'
+        + '  }\n'
+        + '}'
+    );
+});
+
+test('space parameter (nested objects, pretty, sortarrays)', function (t) {
+    t.plan(1);
+    var obj = { one: 1, two: { b: 4, a: [9,3] } };
+    t.equal(stringify(obj, {space: '  ', pretty: true, sortarrays:true}), ''
+        + '{\n'
+        + '  one: 1,\n'
+        + '  two: {\n'
+        + '    a: [\n'
+        + '      3,\n'
+        + '      9\n'
+        + '    ],\n'
+        + '    b: 4\n'
         + '  }\n'
         + '}'
     );

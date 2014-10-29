@@ -7,6 +7,8 @@ module.exports = function (obj, opts) {
     if (typeof space === 'number') space = Array(space+1).join(' ');
     var cycles = (typeof opts.cycles === 'boolean') ? opts.cycles : false;
     var replacer = opts.replacer || function(key, value) { return value; };
+    var pretty = opts.pretty === true;
+    var sortarrays = opts.sortarrays === true;
 
     var cmp = opts.cmp && (function (f) {
         return function (node) {
@@ -32,6 +34,9 @@ module.exports = function (obj, opts) {
         if (node === undefined) {
             return;
         }
+        if (pretty && typeof node === 'string') {
+            return "'" + node.replace("'", "\\\'", 'g') + "'";
+        }
         if (typeof node !== 'object' || node === null) {
             return json.stringify(node);
         }
@@ -41,6 +46,8 @@ module.exports = function (obj, opts) {
                 var item = stringify(node, i, node[i], level+1) || json.stringify(null);
                 out.push(indent + space + item);
             }
+            if (sortarrays)
+              out.sort();
             return '[' + out.join(',') + indent + ']';
         }
         else {
@@ -58,7 +65,7 @@ module.exports = function (obj, opts) {
 
                 if(!value) continue;
 
-                var keyValue = json.stringify(key)
+                var keyValue = (pretty ? key : json.stringify(key))
                     + colonSeparator
                     + value;
                 ;
