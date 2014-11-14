@@ -117,6 +117,61 @@ The replacer parameter is a function `opts.replacer(key, value)` that behaves
 the same as the replacer
 [from the core JSON object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_native_JSON#The_replacer_parameter).
 
+### pretty
+
+If you specify `opts.pretty: true` the stringified text will be formatted as Javascript instead of JSON, ala util.inspect().
+
+For example:
+```js
+var obj = { one: 1, two: { b: 4, a: [2,3] } };
+var s = stringify(obj, { pretty: true });
+console.log(s);
+```
+
+which outputs:
+```js
+{one:1,two:{a:[2,3],b:4}}
+```
+
+Or if also using space:
+```js
+var obj = { one: 1, two: { b: 4, a: [2,3] } };
+var s = stringify(obj, { pretty: true, space: '  ' });
+console.log(s);
+```
+which outputs:
+```js
+{
+  one: 1,
+  two: {
+    a: [
+      2,
+      3
+    ],
+    b: 4
+  }
+}
+```
+
+### sortarrays
+
+If you specify `opts.sortarrays: true` all arrays in the output will be sorted. This can be
+useful in unit tests or other situations where an array is used with the semantics of an
+unordered collection.
+
+For example:
+
+```js
+var obj = { one: 1, two: { b: 4, a: [9,3] } };
+var s = stringify(obj, { sortarrays: true });
+console.log(s);
+```
+
+which outputs:
+```js
+{"one":1,"two":{"a":[3,9],"b":4}}
+```
+
 # install
 
 With [npm](https://npmjs.org) do:

@@ -7,6 +7,24 @@ test('nested', function (t) {
     t.equal(stringify(obj), '{"a":3,"b":[{"x":4,"y":5,"z":6},7],"c":8}');
 });
 
+test('nested (sortarrays)', function (t) {
+    t.plan(1);
+    var obj = { c: 8, b: [{z:6,a:5,x:4},7], a: 3 };
+    t.equal(stringify(obj, {sortarrays:true}), '{"a":3,"b":[7,{"a":5,"x":4,"z":6}],"c":8}');
+});
+
+test('nested (pretty)', function (t) {
+    t.plan(1);
+    var obj = { c: 8, b: [{z:6,y:5,x:4},7], a: 3 };
+    t.equal(stringify(obj, {pretty: true}), '{a:3,b:[{x:4,y:5,z:6},7],c:8}');
+});
+
+test('nested (pretty, sortarrays)', function (t) {
+    t.plan(1);
+    var obj = { c: 8, b: [{z:6,a:5,x:4},7], a: 3 };
+    t.equal(stringify(obj, {pretty: true, sortarrays:true}), '{a:3,b:[7,{a:5,x:4,z:6}],c:8}');
+});
+
 test('cyclic (default)', function (t) {
     t.plan(1);
     var one = { a: 1 };
