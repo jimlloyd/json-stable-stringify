@@ -119,7 +119,7 @@ the same as the replacer
 
 ### pretty
 
-If you specify `opts.pretty: true` the stringified text will be formatted as Javascript instead of JSON, ala util.inspect().
+If you specify `opts.pretty: true` the stringified text will be formatted as Javascript instead of JSON, similar to util.inspect().
 
 For example:
 ```js
@@ -156,8 +156,7 @@ which outputs:
 ### sortarrays
 
 If you specify `opts.sortarrays: true` all arrays in the output will be sorted. This can be
-useful in unit tests or other situations where an array is used with the semantics of an
-unordered collection.
+useful in situations where an array is used with the semantics of an unordered collection.
 
 For example:
 
