@@ -1,6 +1,6 @@
 {
   "name": "json-stable-stringify-pretty",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A fork of substack's json-stable-stringify: deterministic JSON.stringify() with useful options",
   "main": "index.js",
   "dependencies": {
