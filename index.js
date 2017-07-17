@@ -9,6 +9,7 @@ module.exports = function (obj, opts) {
     var replacer = opts.replacer || function(key, value) { return value; };
     var pretty = opts.pretty === true;
     var sortarrays = opts.sortarrays === true;
+    var undef = opts.undef === true;
 
     var cmp = opts.cmp && (function (f) {
         return function (node) {
@@ -32,7 +33,11 @@ module.exports = function (obj, opts) {
         node = replacer.call(parent, key, node);
 
         if (node === undefined) {
+          if (undef) {
+            return 'undefined';
+          } else {
             return;
+          }
         }
         if (pretty && typeof node === 'string') {
             return "'" + node.replace("'", "\\\'", 'g') + "'";
@@ -43,7 +48,7 @@ module.exports = function (obj, opts) {
         if (isArray(node)) {
             var out = [];
             for (var i = 0; i < node.length; i++) {
-                var item = stringify(node, i, node[i], level+1) || json.stringify(null);
+                var item = stringify(node, i, node[i], level+1);
                 out.push(indent + space + item);
             }
             if (sortarrays)
