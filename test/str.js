@@ -8,15 +8,19 @@ test('simple object', function (t) {
 });
 
 test('object with undefined', function (t) {
-	t.plan(1);
+	t.plan(4);
 	var obj = { a: 3, z: undefined };
 	t.equal(stringify(obj), '{"a":3}');
+  t.equal(stringify(obj, {undef: true}), '{"a":3,"z":undefined}');
+  t.equal(stringify(obj, {undef: true, pretty: true}), '{a:3,z:undefined}');
+  t.equal(stringify(obj, {undef: true, pretty: true, space: 2}), '{\n  a: 3,\n  z: undefined\n}');
 });
 
 test('array with undefined', function (t) {
-	t.plan(1);
+	t.plan(2);
 	var obj = [4, undefined, 6];
-	t.equal(stringify(obj), '[4,null,6]');
+  t.equal(stringify(obj), '[4,null,6]');
+  t.equal(stringify(obj, {undef: true}), '[4,undefined,6]');
 });
 
 test('object with empty string', function (t) {

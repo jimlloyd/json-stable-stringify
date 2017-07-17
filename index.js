@@ -9,6 +9,7 @@ module.exports = function (obj, opts) {
     var replacer = opts.replacer || function(key, value) { return value; };
     var pretty = opts.pretty === true;
     var sortarrays = opts.sortarrays === true;
+    var undef = opts.undef === true;
 
     var cmp = opts.cmp && (function (f) {
         return function (node) {
@@ -32,7 +33,11 @@ module.exports = function (obj, opts) {
         node = replacer.call(parent, key, node);
 
         if (node === undefined) {
+          if (undef) {
+            return 'undefined';
+          } else {
             return;
+          }
         }
         if (pretty && typeof node === 'string') {
             return "'" + node.replace("'", "\\\'", 'g') + "'";

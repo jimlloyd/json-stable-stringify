@@ -171,6 +171,28 @@ which outputs:
 {"one":1,"two":{"a":[3,9],"b":4}}
 ```
 
+### undef
+
+By default, if an object has a key whose value is `undefined`, the key will not be shown
+in the stringified output. The option `{undef: true}` will display the key
+
+For example:
+
+```js
+var obj = { a: 3, z: undefined };
+var s = stringify(obj);
+console.log('Default: ', s);
+var t = stringify(obj, {undef: true});
+console.log('With undef: ', t);
+```
+
+which outputs:
+
+```js
+Default: {"a":3}
+With undef: {"a":3,z:undefined}
+```
+
 # install
 
 With [npm](https://npmjs.org) do:
