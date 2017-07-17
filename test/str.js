@@ -19,7 +19,7 @@ test('object with undefined', function (t) {
 test('array with undefined', function (t) {
 	t.plan(2);
 	var obj = [4, undefined, 6];
-  t.equal(stringify(obj), '[4,null,6]');
+  t.equal(stringify(obj), '[4,undefined,6]');
   t.equal(stringify(obj, {undef: true}), '[4,undefined,6]');
 });
 

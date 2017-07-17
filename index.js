@@ -48,7 +48,7 @@ module.exports = function (obj, opts) {
         if (isArray(node)) {
             var out = [];
             for (var i = 0; i < node.length; i++) {
-                var item = stringify(node, i, node[i], level+1) || json.stringify(null);
+                var item = stringify(node, i, node[i], level+1);
                 out.push(indent + space + item);
             }
             if (sortarrays)
