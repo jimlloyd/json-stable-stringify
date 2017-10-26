@@ -26,6 +26,10 @@ module.exports = function (obj, opts) {
         var indent = space ? ('\n' + new Array(level + 1).join(space)) : '';
         var colonSeparator = space ? ': ' : ':';
 
+        // A custom hack for mongodb objectids.
+        if (node && node.toHexString && typeof node.toHexString === 'function') {
+            node = 'id$' + node.toHexString();
+        }
         if (node && node.toJSON && typeof node.toJSON === 'function') {
             node = node.toJSON();
         }
