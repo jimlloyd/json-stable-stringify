@@ -1,4 +1,7 @@
-var json = typeof JSON !== 'undefined' ? JSON : require('jsonify');
+const json = typeof JSON !== 'undefined' ? JSON : require('jsonify');
+const immutable = require('immutable');
+
+const { List } = immutable;
 
 module.exports = function (obj, opts) {
     if (!opts) opts = {};
@@ -21,8 +24,7 @@ module.exports = function (obj, opts) {
         };
     })(opts.cmp);
 
-    var seen = [];
-    return (function stringify (parent, key, node, level) {
+    return (function stringify (parent, key, node, level, seen = List()) {
         var indent = space ? ('\n' + new Array(level + 1).join(space)) : '';
         var colonSeparator = space ? ': ' : ':';
 
@@ -52,7 +54,7 @@ module.exports = function (obj, opts) {
         if (isArray(node)) {
             var out = [];
             for (var i = 0; i < node.length; i++) {
-                var item = stringify(node, i, node[i], level+1);
+                var item = stringify(node, i, node[i], level+1, seen);
                 out.push(indent + space + item);
             }
             if (sortarrays)
@@ -64,13 +66,15 @@ module.exports = function (obj, opts) {
                 if (cycles) return json.stringify('__cycle__');
                 throw new TypeError('Converting circular structure to JSON');
             }
-            else seen.push(node);
+            else {
+              seen = seen.push(node);
+            }
 
             var keys = objectKeys(node).sort(cmp && cmp(node));
             var out = [];
             for (var i = 0; i < keys.length; i++) {
                 var key = keys[i];
-                var value = stringify(node, key, node[key], level+1);
+                var value = stringify(node, key, node[key], level+1, seen);
 
                 if(!value) continue;
 

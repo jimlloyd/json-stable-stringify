@@ -44,3 +44,17 @@ test('cyclic (specifically allowed)', function (t) {
     one.two = two;
     t.equal(stringify(one, {cycles:true}), '{"a":1,"two":{"a":2,"one":"__cycle__"}}');
 });
+
+test('siblings are not cyclic', function (t) {
+    t.plan(1);
+    var one = { a: 1 };
+    var two = { one: one, again: one };
+    t.equal(stringify(two, {cycles:true, pretty: true}), '{again:{a:1},one:{a:1}}');
+});
+
+test('deeper cycle', function (t) {
+    t.plan(1);
+    var foo = {a: { b: { c: 0 } }};
+    foo.a.b.c = foo;
+    t.equal(stringify(foo, {cycles:true, pretty: true}), '{a:{b:{c:"__cycle__"}}}');
+});
